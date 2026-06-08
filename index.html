@@ -906,8 +906,8 @@ p strong { color: rgba(255,255,255,0.85); font-weight: 600; }
     prlxIntro.style.opacity = (introFade * 0.48).toFixed(3);
     prlxIntro.style.transform = 'translateY(' + (sy * 0.28).toFixed(1) + 'px)';
 
-    // ── Trail rider: cross-fades IN as intro fades out, then fades out at end of hero ──
-    var heroFadeIn  = clamp(1 - introFade, 0, 1);
+    // ── Trail rider: fades in independently, fully there by the time hero section arrives ──
+    var heroFadeIn  = clamp((sy - (heroTop - vh * 0.6)) / (vh * 0.5), 0, 1);
     var heroFadeOut = clamp(1 - (heroRel / (heroH * 0.8)), 0, 1);
     prlx1.style.opacity = (heroFadeIn * heroFadeOut * 0.45).toFixed(3);
     prlx1.style.transform = 'translateY(' + (heroRel * 0.3).toFixed(1) + 'px)';

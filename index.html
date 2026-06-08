@@ -901,9 +901,8 @@ p strong { color: rgba(255,255,255,0.85); font-weight: 600; }
     var heroH = hero.offsetHeight;
     var heroRel = sy - heroTop;
 
-    // ── Intro forest: visible at top, cross-fades out as hero arrives ──
-    // starts fading 60vh before hero top, fully gone at hero top
-    var introFade = clamp(1 - (sy - (heroTop - vh * 0.6)) / (vh * 0.6), 0, 1);
+    // ── Intro forest: fades from first scroll, gone by ~55% of intro height ──
+    var introFade = clamp(1 - sy / (heroTop * 0.55), 0, 1);
     prlxIntro.style.opacity = (introFade * 0.48).toFixed(3);
     prlxIntro.style.transform = 'translateY(' + (sy * 0.28).toFixed(1) + 'px)';
 

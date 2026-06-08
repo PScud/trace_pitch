@@ -413,22 +413,9 @@ p strong { color: rgba(255,255,255,0.85); font-weight: 600; }
   align-items: center;
   justify-content: center;
 }
-.intro-logo-wrap {
-  position: relative;
+.intro-logo {
   width: min(400px, 78vw);
-}
-.intro-logo-wrap img {
-  width: 100%;
   height: auto;
-  display: block;
-}
-.intro-logo-outline {
-  mix-blend-mode: multiply;
-  filter: hue-rotate(75deg);
-}
-.intro-logo-fill {
-  position: absolute;
-  inset: 0;
   mix-blend-mode: screen;
   filter: hue-rotate(75deg);
 }
@@ -436,21 +423,13 @@ p strong { color: rgba(255,255,255,0.85); font-weight: 600; }
   background-image: url('intro_bg.png');
   opacity: 0.5;
 }
-.intro-logo {
-  width: min(400px, 78vw);
-  height: auto;
-  filter: hue-rotate(75deg);
-}
 </style>
 </head>
 <body>
 
 <!-- INTRO SPLASH -->
 <div id="intro">
-  <div class="intro-logo-wrap">
-    <img src="logo_sticker.png" alt="TRACE Telemetry" class="intro-logo-outline">
-    <img src="logo.png" alt="" class="intro-logo-fill">
-  </div>
+  <img src="logo.png" alt="TRACE Telemetry" class="intro-logo">
 </div>
 
 <div class="prlx" id="prlx-intro"></div>

@@ -408,10 +408,15 @@ p strong { color: rgba(255,255,255,0.85); font-weight: 600; }
 #intro {
   width: 100%;
   height: 100vh;
-  background: #000;
+  background: #000 url('intro_bg.png') center/cover no-repeat;
   display: flex;
   align-items: center;
   justify-content: center;
+  box-shadow:
+    inset 0 160px 180px #000,
+    inset 0 -220px 240px #000,
+    inset 140px 0 160px #000,
+    inset -140px 0 160px #000;
 }
 .intro-logo {
   width: min(400px, 78vw);

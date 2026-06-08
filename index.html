@@ -50,7 +50,7 @@ a { color: #4ade80; text-decoration: none; }
   max-width: 860px;
   margin: 0 auto;
 }
-#hero-vignette {
+#hero-vignette, #market-vignette {
   position: fixed;
   inset: 0;
   z-index: -1;
@@ -406,6 +406,7 @@ p strong { color: rgba(255,255,255,0.85); font-weight: 600; }
 <div class="prlx" id="prlx1"></div>
 <div class="prlx" id="prlx2"></div>
 <div id="hero-vignette"></div>
+<div id="market-vignette"></div>
 
 <!-- HERO -->
 <div class="hero" id="hero">
@@ -848,6 +849,7 @@ p strong { color: rgba(255,255,255,0.85); font-weight: 600; }
   var prlx1 = document.getElementById('prlx1');
   var prlx2 = document.getElementById('prlx2');
   var vignette = document.getElementById('hero-vignette');
+  var marketVignette = document.getElementById('market-vignette');
   var hero = document.getElementById('hero');
   var market = document.getElementById('market');
   var solution = document.getElementById('solution');
@@ -876,6 +878,7 @@ p strong { color: rgba(255,255,255,0.85); font-weight: 600; }
     var fadeOut = clamp((sy - (solutionBottom - vh * 0.6)) / (vh * 0.6), 0, 1);
     var op2 = fadeIn * (1 - fadeOut) * 0.38;
     prlx2.style.opacity = op2.toFixed(3);
+    marketVignette.style.opacity = (fadeIn * (1 - fadeOut)).toFixed(3);
     prlx2.style.transform = 'translateY(' + ((sy - marketTop) * 0.28).toFixed(1) + 'px)';
   }
 

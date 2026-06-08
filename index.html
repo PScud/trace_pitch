@@ -885,6 +885,27 @@ p strong { color: rgba(255,255,255,0.85); font-weight: 600; }
 </div>
 
 <script>
+// ── TIMING CONFIG — tweak these numbers, save, refresh locally to preview ──
+var T = {
+  // Photo 1 — intro forest
+  introGoneBy:      0.55,  // fraction of intro height when forest is fully gone (lower = sooner)
+
+  // Photo 2 — trail rider (hero section)
+  heroLeadIn:       1.0,   // viewports before hero top where trail rider starts fading in (higher = sooner)
+  heroLeadInWindow: 0.5,   // viewports over which trail rider fades in (lower = faster fade)
+  heroMaxOpacity:   0.45,
+
+  // Photo 3 — jump shot (market/solution sections)
+  marketLeadIn:     1.5,   // viewports before market where jump shot starts (higher = sooner)
+  marketMaxOpacity: 0.38,
+
+  // Photo 4 — dark forest descent (differentiators → ask)
+  diffLeadIn:       1.5,   // viewports before differentiators where it starts (higher = sooner)
+  diffMaxOpacity:   0.42,
+  diffFadeOutStart: 1.2,   // viewports from page bottom where it starts fading out
+};
+// ─────────────────────────────────────────────────────────────────────────────
+
 (function () {
   var prlxIntro = document.getElementById('prlx-intro');
   var prlx1 = document.getElementById('prlx1');
@@ -905,34 +926,31 @@ p strong { color: rgba(255,255,255,0.85); font-weight: 600; }
     var heroH = hero.offsetHeight;
     var heroRel = sy - heroTop;
 
-    // ── Intro forest: fades from first scroll, gone by ~55% of intro height ──
-    var introFade = clamp(1 - sy / (heroTop * 0.55), 0, 1);
+    // Photo 1 — intro forest
+    var introFade = clamp(1 - sy / (heroTop * T.introGoneBy), 0, 1);
     prlxIntro.style.opacity = (introFade * 0.48).toFixed(3);
     prlxIntro.style.transform = 'translateY(' + (sy * 0.28).toFixed(1) + 'px)';
 
-    // ── Trail rider: starts fading in 1 full viewport before hero, fully there by hero top ──
-    var heroFadeIn  = clamp((sy - (heroTop - vh)) / (vh * 0.5), 0, 1);
+    // Photo 2 — trail rider
+    var heroFadeIn  = clamp((sy - (heroTop - vh * T.heroLeadIn)) / (vh * T.heroLeadInWindow), 0, 1);
     var heroFadeOut = clamp(1 - (heroRel / (heroH * 0.8)), 0, 1);
-    prlx1.style.opacity = (heroFadeIn * heroFadeOut * 0.45).toFixed(3);
+    prlx1.style.opacity = (heroFadeIn * heroFadeOut * T.heroMaxOpacity).toFixed(3);
     prlx1.style.transform = 'translateY(' + (heroRel * 0.3).toFixed(1) + 'px)';
 
-    // ── Photo 2: starts fading in 1.5 viewports before market, fully there at market top ──
+    // Photo 3 — jump shot
     var marketTop = market.offsetTop;
     var solutionBottom = solution.offsetTop + solution.offsetHeight;
-
-    var fadeIn = clamp((sy + vh * 1.5 - marketTop) / vh, 0, 1);
-    // fade out: starts 80% through solution section, gone at bottom
-    var fadeOut = clamp((sy - (solutionBottom - vh * 0.6)) / (vh * 0.6), 0, 1);
-    var op2 = fadeIn * (1 - fadeOut) * 0.38;
-    prlx2.style.opacity = op2.toFixed(3);
+    var fadeIn2  = clamp((sy + vh * T.marketLeadIn - marketTop) / vh, 0, 1);
+    var fadeOut2 = clamp((sy - (solutionBottom - vh * 0.6)) / (vh * 0.6), 0, 1);
+    prlx2.style.opacity = (fadeIn2 * (1 - fadeOut2) * T.marketMaxOpacity).toFixed(3);
     prlx2.style.transform = 'translateY(' + ((sy - marketTop) * 0.28).toFixed(1) + 'px)';
 
-    // ── Photo 3: dark forest descent — fades in behind differentiators → end of page ──
+    // Photo 4 — dark forest descent
     var diffTop = differentiators.offsetTop;
     var pageBottom = document.body.scrollHeight;
-    var fadeIn3  = clamp((sy + vh * 1.5 - diffTop) / vh, 0, 1);
-    var fadeOut3 = clamp((sy - (pageBottom - vh * 1.2)) / (vh * 0.6), 0, 1);
-    prlx3.style.opacity = (fadeIn3 * (1 - fadeOut3) * 0.42).toFixed(3);
+    var fadeIn3  = clamp((sy + vh * T.diffLeadIn - diffTop) / vh, 0, 1);
+    var fadeOut3 = clamp((sy - (pageBottom - vh * T.diffFadeOutStart)) / (vh * 0.6), 0, 1);
+    prlx3.style.opacity = (fadeIn3 * (1 - fadeOut3) * T.diffMaxOpacity).toFixed(3);
     prlx3.style.transform = 'translateY(' + ((sy - diffTop) * 0.28).toFixed(1) + 'px)';
   }
 

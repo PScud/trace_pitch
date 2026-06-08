@@ -403,18 +403,62 @@ p strong { color: rgba(255,255,255,0.85); font-weight: 600; }
   /* flow steps */
   .flow-step { padding: 14px 16px; }
 }
+
+/* ── INTRO SCREEN ── */
+#intro {
+  position: fixed;
+  inset: 0;
+  background: #000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 200;
+  cursor: pointer;
+  transition: transform 1s cubic-bezier(0.76, 0, 0.24, 1);
+  will-change: transform;
+}
+#intro.gone {
+  transform: translateY(-100%);
+  pointer-events: none;
+}
+.intro-logo {
+  width: min(400px, 78vw);
+  height: auto;
+  filter: hue-rotate(75deg);
+  animation: logoIn 0.8s ease-out forwards;
+}
+@keyframes logoIn {
+  from { opacity: 0; transform: scale(0.93); }
+  to   { opacity: 1; transform: scale(1); }
+}
+.intro-hint {
+  position: absolute;
+  bottom: 44px;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.2);
+  opacity: 0;
+  animation: hintIn 0.6s ease forwards 2.2s;
+}
+@keyframes hintIn { to { opacity: 1; } }
 </style>
 </head>
 <body>
+
+<!-- INTRO SPLASH -->
+<div id="intro">
+  <img src="logo.png" alt="TRACE Telemetry" class="intro-logo">
+  <div class="intro-hint">tap anywhere to continue</div>
+</div>
 
 <div class="prlx" id="prlx1"></div>
 <div class="prlx" id="prlx2"></div>
 
 <!-- HERO -->
 <div class="hero" id="hero">
-  <img src="logo.png" alt="TRACE Telemetry"
-    style="width:280px;height:auto;display:block;margin-bottom:28px;mix-blend-mode:screen;filter:hue-rotate(75deg);">
-
   <h1>Know your<br><span>suspension.</span></h1>
   <p class="hero-sub">TRACE is wireless suspension telemetry for mountain bikes — real data, real analysis, real tuning advice. Built for riders, not race teams.</p>
   <div class="hero-stat-row">
@@ -851,6 +895,27 @@ p strong { color: rgba(255,255,255,0.85); font-weight: 600; }
 </div>
 
 <script>
+// ── INTRO REVEAL ──
+(function () {
+  var intro = document.getElementById('intro');
+  var dismissed = false;
+
+  function reveal() {
+    if (dismissed) return;
+    dismissed = true;
+    document.body.style.overflow = '';
+    intro.classList.add('gone');
+    setTimeout(function () { intro.remove(); }, 1100);
+  }
+
+  document.body.style.overflow = 'hidden';
+  intro.addEventListener('click', reveal);
+  window.addEventListener('wheel', reveal, { once: true, passive: true });
+  window.addEventListener('touchmove', reveal, { once: true, passive: true });
+  setTimeout(reveal, 4200);
+})();
+
+// ── PARALLAX ──
 (function () {
   var prlx1 = document.getElementById('prlx1');
   var prlx2 = document.getElementById('prlx2');

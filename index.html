@@ -366,6 +366,9 @@ p strong { color: rgba(255,255,255,0.85); font-weight: 600; }
   /* disable parallax photos — unreliable on iOS */
   .prlx { display: none; }
 
+  /* hide verbose body text in content sections */
+  .mobile-hide { display: none; }
+
   /* layout */
   .section, .section-wide { padding: 64px 20px; }
   .hero { padding: 60px 20px; min-height: 100vh; }
@@ -374,15 +377,26 @@ p strong { color: rgba(255,255,255,0.85); font-weight: 600; }
   .hero-sub { font-size: 16px; margin-bottom: 32px; }
   h2 { font-size: clamp(24px, 6vw, 34px); }
 
-  /* competitor table — scroll horizontally */
-  .comp-table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 0 -16px; padding: 0 16px; }
-  .comp-table { min-width: 520px; font-size: 12px; }
-  .comp-table th, .comp-table td { padding: 8px 10px; }
+  /* hide full competitor table, show mobile version */
+  .comp-table-wrap { display: none; }
+  .comp-mobile { display: block !important; }
 
-  /* phone mockups — show only first phone, centered */
-  .mockups-row { justify-content: center; flex-wrap: wrap; gap: 0; margin-top: 32px; }
-  .phone-wrap:not(:first-child) { display: none; }
-  .phone { width: min(240px, 72vw); height: auto; min-height: 420px; }
+  /* phone mockups — swipe carousel */
+  .mockups-row {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    justify-content: flex-start;
+    padding-bottom: 16px;
+    gap: 16px;
+    margin: 32px -20px 0;
+    padding-left: 20px;
+    padding-right: 20px;
+    scrollbar-width: none;
+  }
+  .mockups-row::-webkit-scrollbar { display: none; }
+  .phone-wrap { flex-shrink: 0; }
+  .phone { width: min(220px, 68vw); }
 
   /* diff grid — single column */
   .diff-grid { grid-template-columns: 1fr; }
@@ -473,9 +487,9 @@ p strong { color: rgba(255,255,255,0.85); font-weight: 600; }
 <div class="section">
   <div class="eyebrow">The Problem</div>
   <h2>Riders spend thousands on suspension and tune it by feel.</h2>
-  <p>A serious mountain bike costs $5,000–$15,000. The fork and shock alone run $800–$2,500. Fox, RockShox, Öhlins — riders obsess over their components.</p>
-  <p>Then they go ride, something feels off, they make a guess, and try again. The suspension is moving 500 times per second over every rock and root. <strong>None of that data is being captured.</strong></p>
-  <p>Pay a suspension tuner $150 for a session? They work by experience — educated feel, not data. The gap between what riders spend and what they know about their setup is enormous.</p>
+  <p>Riders spend $800–$2,500 on suspension and tune it by feel. <strong>None of that data is being captured.</strong></p>
+  <p class="mobile-hide">A serious mountain bike costs $5,000–$15,000. The fork and shock alone run $800–$2,500. Fox, RockShox, Öhlins — riders obsess over their components.</p>
+  <p class="mobile-hide">Pay a suspension tuner $150 for a session? They work by experience — educated feel, not data. The gap between what riders spend and what they know about their setup is enormous.</p>
 
   <div class="card-row">
     <div class="card">
@@ -503,6 +517,14 @@ p strong { color: rgba(255,255,255,0.85); font-weight: 600; }
   <div class="eyebrow">The Competitive Landscape</div>
   <h2>The market is empty. And we know why.</h2>
   <p>There have been attempts. None of them solve this for regular riders.</p>
+
+  <!-- Mobile competitor summary -->
+  <div class="comp-mobile" style="display:none; margin-top: 20px;">
+    <div class="card" style="margin-bottom:8px;"><h4>Shockwiz — $150</h4><p style="margin:0;font-size:13px;">Pressure only. Air suspension only. No position data.</p></div>
+    <div class="card" style="margin-bottom:8px;"><h4>BYB Telemetry — $1,000+</h4><p style="margin:0;font-size:13px;">Pro-grade, wired, complex. Not for regular riders.</p></div>
+    <div class="card" style="margin-bottom:8px;"><h4>Motion Instruments (MiQ) <span class="dead-badge">Killed</span></h4><p style="margin:0;font-size:13px;">Closest thing to TRACE. Acquired by Specialized, shut down post-COVID.</p></div>
+    <div class="card" style="border-color:rgba(74,222,128,0.3);background:rgba(74,222,128,0.05);"><h4 style="color:#4ade80;">TRACE — Building now</h4><p style="margin:0;font-size:13px;">500Hz wireless sensor. Full AI insights. Consumer-priced.</p></div>
+  </div>
 
   <div class="bubble" style="margin-top: 28px; align-self: stretch;">
   <div class="comp-table-wrap">
@@ -550,7 +572,7 @@ p strong { color: rgba(255,255,255,0.85); font-weight: 600; }
   </table>
   </div>
 
-  <p style="margin-top: 24px;"><strong>Motion Instruments proved the market.</strong> They built the closest thing to TRACE — a wireless consumer suspension sensor — and Specialized thought it was valuable enough to acquire the whole company. Then they shut the product down after COVID cuts. The market they were serving has been empty ever since. That was four years ago.</p>
+  <p class="mobile-hide" style="margin-top: 24px;"><strong>Motion Instruments proved the market.</strong> They built the closest thing to TRACE — a wireless consumer suspension sensor — and Specialized thought it was valuable enough to acquire the whole company. Then they shut the product down after COVID cuts. The market they were serving has been empty ever since. That was four years ago.</p>
   </div>
 </div>
 

@@ -45,6 +45,14 @@ a { color: #4ade80; text-decoration: none; }
   max-width: 860px;
   margin: 0 auto;
 }
+#hero-vignette {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: radial-gradient(ellipse 75% 70% at 38% 52%, rgba(8,8,10,0.93) 0%, rgba(8,8,10,0.6) 45%, transparent 72%);
+  will-change: opacity;
+}
 .hero-tag {
   font-size: 11px;
   font-weight: 600;
@@ -392,6 +400,7 @@ p strong { color: rgba(255,255,255,0.85); font-weight: 600; }
 
 <div class="prlx" id="prlx1"></div>
 <div class="prlx" id="prlx2"></div>
+<div id="hero-vignette"></div>
 
 <!-- HERO -->
 <div class="hero" id="hero">
@@ -833,6 +842,7 @@ p strong { color: rgba(255,255,255,0.85); font-weight: 600; }
 (function () {
   var prlx1 = document.getElementById('prlx1');
   var prlx2 = document.getElementById('prlx2');
+  var vignette = document.getElementById('hero-vignette');
   var hero = document.getElementById('hero');
   var market = document.getElementById('market');
   var solution = document.getElementById('solution');
@@ -849,6 +859,7 @@ p strong { color: rgba(255,255,255,0.85); font-weight: 600; }
     var heroFadeOut = clamp(1 - (sy / (heroH * 0.8)), 0, 1);
     prlx1.style.opacity = (heroFadeOut * 0.45).toFixed(3);
     prlx1.style.transform = 'translateY(' + (sy * 0.3).toFixed(1) + 'px)';
+    vignette.style.opacity = heroFadeOut.toFixed(3);
 
     // ── Photo 2: trail shot behind market gap → end of solution ──
     var marketTop = market.offsetTop;

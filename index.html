@@ -363,7 +363,11 @@ p strong { color: rgba(255,255,255,0.85); font-weight: 600; }
 
 /* ── MOBILE ── */
 @media (max-width: 768px) {
-  .section, .section-wide { padding: 80px 20px; }
+  /* disable parallax photos — unreliable on iOS */
+  .prlx { display: none; }
+
+  /* layout */
+  .section, .section-wide { padding: 64px 20px; }
   .hero { padding: 60px 20px; min-height: 100vh; }
   .hero-stat-row { gap: 24px; }
   .hero h1 { font-size: clamp(38px, 10vw, 56px); }
@@ -372,25 +376,13 @@ p strong { color: rgba(255,255,255,0.85); font-weight: 600; }
 
   /* competitor table — scroll horizontally */
   .comp-table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 0 -16px; padding: 0 16px; }
-  .comp-table { min-width: 560px; font-size: 12px; }
+  .comp-table { min-width: 520px; font-size: 12px; }
   .comp-table th, .comp-table td { padding: 8px 10px; }
 
-  /* phone mockups — swipe horizontally */
-  .mockups-row {
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    justify-content: flex-start;
-    padding-bottom: 16px;
-    gap: 16px;
-    margin: 32px -20px 0;
-    padding-left: 20px;
-    padding-right: 20px;
-    scrollbar-width: none;
-  }
-  .mockups-row::-webkit-scrollbar { display: none; }
-  .phone-wrap { flex-shrink: 0; }
-  .phone { width: 200px; height: 410px; }
+  /* phone mockups — show only first phone, centered */
+  .mockups-row { justify-content: center; flex-wrap: wrap; gap: 0; margin-top: 32px; }
+  .phone-wrap:not(:first-child) { display: none; }
+  .phone { width: min(240px, 72vw); height: auto; min-height: 420px; }
 
   /* diff grid — single column */
   .diff-grid { grid-template-columns: 1fr; }
@@ -403,13 +395,14 @@ p strong { color: rgba(255,255,255,0.85); font-weight: 600; }
   .ask-amount { font-size: 36px; }
 
   /* status table */
-  .status-table td { padding: 8px 10px; font-size: 13px; }
+  .status-table { font-size: 13px; }
+  .status-table td { padding: 8px 10px; }
 
   /* flow steps */
   .flow-step { padding: 12px 14px; }
 
   /* intro logo */
-  .intro-logo { width: min(280px, 72vw); }
+  .intro-logo { width: min(260px, 72vw); }
 }
 
 /* ── INTRO SCREEN ── */

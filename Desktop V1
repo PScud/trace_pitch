@@ -1,0 +1,963 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TRACE — Pitch</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { background: #08080a; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  color: #fff;
+  line-height: 1.6;
+}
+
+/* ── PARALLAX LAYERS ── */
+.prlx {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-size: cover;
+  background-position: center top;
+  opacity: 0;
+  will-change: transform, opacity;
+  box-shadow:
+    inset 0 120px 140px #08080a,
+    inset 0 -120px 140px #08080a,
+    inset 100px 0 120px #08080a,
+    inset -100px 0 120px #08080a;
+}
+#prlx1 { background-image: url('mtb2.png'); }
+#prlx2 { background-image: url('mtb1.png'); }
+#prlx3 { background-image: url('mtb3.jpg'); }
+
+a { color: #4ade80; text-decoration: none; }
+
+/* ── LAYOUT ── */
+.section { padding: 160px 24px; max-width: 860px; margin: 0 auto; }
+.section-wide { padding: 160px 24px; max-width: 1100px; margin: 0 auto; }
+.divider { display: none; }
+
+/* ── HERO ── */
+.hero {
+  min-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: 48px 24px 80px;
+  max-width: 860px;
+  margin: 0 auto;
+}
+.bubble {
+  background: rgba(10, 10, 12, 0.88);
+  border: 0.5px solid rgba(255,255,255,0.09);
+  border-radius: 22px;
+  padding: 32px 36px;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  align-self: flex-start;
+  margin-bottom: 0;
+}
+.bubble p { margin-bottom: 0; }
+.bubble .hero-stat-row { margin-top: 32px; }
+.hero-tag {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #4ade80;
+  margin-bottom: 20px;
+}
+.hero h1 {
+  font-size: clamp(48px, 8vw, 88px);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  margin-bottom: 24px;
+}
+.hero h1 span { color: #4ade80; }
+.hero-sub {
+  font-size: clamp(18px, 3vw, 24px);
+  color: rgba(255,255,255,0.5);
+  max-width: 600px;
+  margin-bottom: 48px;
+  font-weight: 400;
+}
+.hero-stat-row {
+  display: flex;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+.hero-stat { }
+.hero-stat .num {
+  font-size: 32px;
+  font-weight: 700;
+  color: #4ade80;
+  letter-spacing: -0.02em;
+}
+.hero-stat .label {
+  font-size: 12px;
+  color: rgba(255,255,255,0.35);
+  margin-top: 2px;
+}
+
+/* ── SECTION HEADERS ── */
+.eyebrow {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #4ade80;
+  margin-bottom: 12px;
+}
+h2 {
+  font-size: clamp(28px, 4vw, 40px);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin-bottom: 20px;
+  line-height: 1.15;
+}
+h3 {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 10px;
+  color: rgba(255,255,255,0.9);
+}
+p {
+  font-size: 16px;
+  color: rgba(255,255,255,0.55);
+  margin-bottom: 16px;
+  max-width: 680px;
+}
+p strong { color: rgba(255,255,255,0.85); font-weight: 600; }
+
+/* ── PROBLEM CARDS ── */
+.card-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; margin-top: 32px; }
+.card {
+  background: #111114;
+  border: 0.5px solid rgba(255,255,255,0.08);
+  border-radius: 14px;
+  padding: 20px;
+}
+.card .card-icon { font-size: 22px; margin-bottom: 12px; }
+.card h4 { font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.85); margin-bottom: 6px; }
+.card p { font-size: 13px; color: rgba(255,255,255,0.4); margin: 0; max-width: none; }
+
+/* ── COMPETITOR TABLE ── */
+.comp-table { width: 100%; border-collapse: collapse; margin-top: 28px; font-size: 14px; }
+.comp-table th { text-align: left; padding: 10px 14px; font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(255,255,255,0.3); border-bottom: 0.5px solid rgba(255,255,255,0.08); }
+.comp-table td { padding: 14px; border-bottom: 0.5px solid rgba(255,255,255,0.05); color: rgba(255,255,255,0.55); vertical-align: top; }
+.comp-table td:first-child { color: rgba(255,255,255,0.85); font-weight: 500; }
+.comp-table tr.highlight td { background: rgba(74,222,128,0.05); }
+.comp-table tr.highlight td:first-child { color: #4ade80; }
+.dot-yes { color: #4ade80; font-weight: 700; }
+.dot-no { color: rgba(255,255,255,0.2); }
+.dot-partial { color: #fbbf24; }
+.dead-badge {
+  display: inline-block;
+  background: rgba(248,113,113,0.12);
+  color: #f87171;
+  border: 0.5px solid rgba(248,113,113,0.2);
+  border-radius: 4px;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 2px 6px;
+  margin-left: 6px;
+  vertical-align: middle;
+}
+
+/* ── WORKFLOW ── */
+.flow { margin-top: 32px; display: flex; flex-direction: column; gap: 2px; }
+.flow-step {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  padding: 16px 20px;
+  background: #111114;
+  border: 0.5px solid rgba(255,255,255,0.06);
+  border-radius: 10px;
+}
+.flow-step + .flow-step { margin-top: 6px; }
+.flow-num {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: rgba(74,222,128,0.12);
+  border: 0.5px solid rgba(74,222,128,0.25);
+  color: #4ade80;
+  font-size: 11px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+.flow-content h4 { font-size: 14px; font-weight: 600; color: rgba(255,255,255,0.9); margin-bottom: 3px; }
+.flow-content p { font-size: 13px; color: rgba(255,255,255,0.4); margin: 0; max-width: none; }
+
+/* ── PHONE MOCKUPS ── */
+.mockups-row {
+  display: flex;
+  gap: 24px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 48px;
+}
+.phone-wrap { display: flex; flex-direction: column; align-items: center; gap: 14px; }
+.phone-label { font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.3); letter-spacing: 0.06em; text-transform: uppercase; }
+.phone {
+  width: 220px;
+  height: 440px;
+  background: #0e0e10;
+  border-radius: 36px;
+  border: 1.5px solid rgba(255,255,255,0.12);
+  overflow: hidden;
+  position: relative;
+  box-shadow: 0 32px 64px rgba(0,0,0,0.6), 0 0 0 0.5px rgba(255,255,255,0.06);
+  padding: 14px 12px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.phone::before {
+  content: '';
+  width: 60px;
+  height: 4px;
+  background: rgba(255,255,255,0.15);
+  border-radius: 2px;
+  position: absolute;
+  top: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* phone ui primitives */
+.p-screen-title { font-size: 11px; font-weight: 700; color: rgba(255,255,255,0.8); letter-spacing: 0.04em; margin-top: 6px; }
+.p-subtitle { font-size: 9px; color: rgba(255,255,255,0.3); margin-bottom: 4px; }
+.p-card {
+  background: #1a1a1e;
+  border: 0.5px solid rgba(255,255,255,0.08);
+  border-radius: 10px;
+  padding: 8px 10px;
+}
+.p-card-head { font-size: 9px; font-weight: 600; color: rgba(255,255,255,0.5); letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 4px; }
+.p-card-val { font-size: 11px; color: rgba(255,255,255,0.85); font-weight: 500; }
+.p-card-sub { font-size: 9px; color: rgba(255,255,255,0.3); margin-top: 1px; }
+.p-row { display: flex; gap: 5px; }
+.p-row .p-card { flex: 1; }
+.p-bar-label { display: flex; justify-content: space-between; margin-bottom: 3px; }
+.p-bar-label span { font-size: 9px; color: rgba(255,255,255,0.4); }
+.p-bar-track { height: 6px; background: rgba(255,255,255,0.06); border-radius: 3px; overflow: hidden; margin-bottom: 5px; }
+.p-bar-fill { height: 100%; border-radius: 3px; }
+.p-green { background: #4ade80; }
+.p-blue { background: #60a5fa; }
+.p-amber { background: #fbbf24; }
+.p-red { background: #f87171; }
+.p-sensor-row { display: flex; align-items: center; gap: 6px; }
+.p-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+.p-sensor-label { font-size: 9px; color: rgba(255,255,255,0.5); }
+.p-sensor-val { font-size: 9px; color: rgba(255,255,255,0.8); margin-left: auto; font-weight: 600; }
+.p-btn {
+  border-radius: 8px;
+  padding: 7px;
+  text-align: center;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  margin-top: 2px;
+}
+.p-btn-green { background: #4ade80; color: #0e0e10; }
+.p-btn-outline { border: 0.5px solid rgba(255,255,255,0.15); color: rgba(255,255,255,0.5); }
+.p-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 7px;
+  border-radius: 6px;
+  font-size: 9px;
+  font-weight: 600;
+}
+.p-badge-green { background: rgba(74,222,128,0.12); color: #4ade80; border: 0.5px solid rgba(74,222,128,0.2); }
+.p-badge-amber { background: rgba(251,191,36,0.12); color: #fbbf24; border: 0.5px solid rgba(251,191,36,0.2); }
+.p-badge-red { background: rgba(248,113,113,0.12); color: #f87171; border: 0.5px solid rgba(248,113,113,0.2); }
+.p-divider { height: 0.5px; background: rgba(255,255,255,0.05); margin: 2px 0; }
+.p-pill-row { display: flex; gap: 3px; margin-bottom: 4px; }
+.p-pill { font-size: 8px; font-weight: 600; padding: 3px 7px; border-radius: 20px; background: rgba(255,255,255,0.06); color: rgba(255,255,255,0.4); }
+.p-pill.active { background: rgba(96,165,250,0.15); color: #60a5fa; }
+.p-hist { display: flex; align-items: flex-end; gap: 2px; height: 40px; padding-top: 4px; }
+.p-hist-bar { flex: 1; border-radius: 2px 2px 0 0; }
+.p-stat-row { display: flex; justify-content: space-between; align-items: baseline; padding: 4px 0; border-bottom: 0.5px solid rgba(255,255,255,0.04); }
+.p-stat-row:last-child { border-bottom: none; }
+.p-stat-label { font-size: 9px; color: rgba(255,255,255,0.35); }
+.p-stat-val { font-size: 10px; font-weight: 600; color: rgba(255,255,255,0.8); }
+.p-insight-item { background: #1a1a1e; border: 0.5px solid rgba(255,255,255,0.08); border-radius: 8px; padding: 7px 9px; margin-bottom: 5px; }
+.p-insight-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 3px; }
+.p-insight-title { font-size: 10px; font-weight: 600; color: rgba(255,255,255,0.85); }
+.p-insight-body { font-size: 9px; color: rgba(255,255,255,0.4); line-height: 1.4; }
+.p-progress-wrap { margin-bottom: 8px; }
+.p-progress-label { display: flex; justify-content: space-between; margin-bottom: 4px; }
+.p-progress-label span { font-size: 9px; color: rgba(255,255,255,0.35); }
+.p-progress-label strong { font-size: 9px; color: #4ade80; }
+.p-tab-bar {
+  display: flex;
+  justify-content: space-around;
+  padding: 6px 0 2px;
+  border-top: 0.5px solid rgba(255,255,255,0.06);
+  margin-top: auto;
+}
+.p-tab { font-size: 8px; font-weight: 600; color: rgba(255,255,255,0.25); letter-spacing: 0.04em; text-align: center; }
+.p-tab.active { color: #4ade80; }
+
+/* ── STATUS TABLE ── */
+.status-table { width: 100%; border-collapse: collapse; margin-top: 24px; font-size: 14px; }
+.status-table td { padding: 12px 14px; border-bottom: 0.5px solid rgba(255,255,255,0.05); color: rgba(255,255,255,0.55); }
+.status-table td:first-child { color: rgba(255,255,255,0.85); }
+.status-done { color: #4ade80; font-weight: 600; }
+.status-pending { color: rgba(255,255,255,0.3); }
+
+/* ── DIFFERENTIATORS ── */
+.diff-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; margin-top: 28px; }
+.diff-card {
+  background: #111114;
+  border: 0.5px solid rgba(255,255,255,0.08);
+  border-radius: 14px;
+  padding: 22px;
+}
+.diff-card .diff-icon { font-size: 24px; margin-bottom: 12px; }
+.diff-card h4 { font-size: 14px; font-weight: 600; color: rgba(255,255,255,0.9); margin-bottom: 8px; }
+.diff-card p { font-size: 13px; color: rgba(255,255,255,0.4); margin: 0; max-width: none; }
+
+/* ── ASK ── */
+.ask-box {
+  background: linear-gradient(135deg, rgba(74,222,128,0.08) 0%, rgba(96,165,250,0.06) 100%);
+  border: 0.5px solid rgba(74,222,128,0.2);
+  border-radius: 20px;
+  padding: 40px;
+  margin-top: 32px;
+}
+.ask-box h3 { font-size: 22px; color: #fff; margin-bottom: 12px; }
+.ask-box p { max-width: none; }
+.ask-amount {
+  font-size: 48px;
+  font-weight: 700;
+  color: #4ade80;
+  letter-spacing: -0.03em;
+  margin: 20px 0 8px;
+}
+.ask-use { display: flex; flex-direction: column; gap: 8px; margin-top: 20px; }
+.ask-line { display: flex; justify-content: space-between; align-items: baseline; padding: 8px 0; border-bottom: 0.5px solid rgba(255,255,255,0.06); }
+.ask-line:last-child { border-bottom: none; }
+.ask-line span { font-size: 14px; color: rgba(255,255,255,0.6); }
+.ask-line strong { font-size: 14px; color: rgba(255,255,255,0.9); }
+
+/* ── FOOTER ── */
+.footer { padding: 48px 24px; text-align: center; }
+.footer p { font-size: 13px; color: rgba(255,255,255,0.2); max-width: none; margin: 4px 0; }
+.footer a { color: rgba(255,255,255,0.4); }
+
+/* ── MOBILE ── */
+@media (max-width: 640px) {
+  .section, .section-wide { padding: 56px 20px; }
+  .hero { padding: 64px 20px; min-height: 90vh; }
+  .hero-stat-row { gap: 28px; }
+
+  /* competitor table — scroll horizontally */
+  .comp-table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 0 -16px; padding: 0 16px; }
+  .comp-table { min-width: 560px; font-size: 12px; }
+  .comp-table th, .comp-table td { padding: 10px 10px; }
+
+  /* phone mockups — scroll horizontally */
+  .mockups-row {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    justify-content: flex-start;
+    padding-bottom: 16px;
+    gap: 16px;
+    margin: 32px -20px 0;
+    padding-left: 20px;
+    padding-right: 20px;
+    scrollbar-width: none;
+  }
+  .mockups-row::-webkit-scrollbar { display: none; }
+  .phone-wrap { flex-shrink: 0; }
+
+  /* diff grid — single column */
+  .diff-grid { grid-template-columns: 1fr; }
+
+  /* card row — single column */
+  .card-row { grid-template-columns: 1fr; }
+
+  /* ask box */
+  .ask-box { padding: 24px 20px; }
+  .ask-amount { font-size: 36px; }
+
+  /* status table */
+  .status-table td { padding: 10px 10px; font-size: 13px; }
+
+  /* flow steps */
+  .flow-step { padding: 14px 16px; }
+}
+
+/* ── INTRO SCREEN ── */
+#intro {
+  width: 100%;
+  height: 100vh;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+#intro::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 42% 36% at 50% 50%, rgba(0,0,0,0.72) 0%, transparent 100%);
+  pointer-events: none;
+  z-index: 0;
+}
+.intro-logo { position: relative; z-index: 1; }
+#prlx-intro {
+  background-image: url('intro_bg.png');
+  opacity: 0.5;
+}
+.intro-logo {
+  width: min(400px, 78vw);
+  height: auto;
+  filter: hue-rotate(75deg);
+}
+</style>
+</head>
+<body>
+
+<!-- INTRO SPLASH -->
+<div id="intro">
+  <img src="logo.png" alt="TRACE Telemetry" class="intro-logo" style="mix-blend-mode:screen;">
+</div>
+
+<div class="prlx" id="prlx-intro"></div>
+<div class="prlx" id="prlx1"></div>
+<div class="prlx" id="prlx2"></div>
+<div class="prlx" id="prlx3"></div>
+
+<!-- HERO -->
+<div class="hero" id="hero">
+  <h1>Know your<br><span>suspension.</span></h1>
+  <p class="hero-sub">TRACE is wireless suspension telemetry for mountain bikes — real data, real analysis, real tuning advice. Built for riders, not race teams.</p>
+  <div class="hero-stat-row">
+    <div class="hero-stat">
+      <div class="num">$10B</div>
+      <div class="label">Global MTB market</div>
+    </div>
+    <div class="hero-stat">
+      <div class="num">$0</div>
+      <div class="label">Affordable telemetry</div>
+    </div>
+    <div class="hero-stat">
+      <div class="num">POC ✓</div>
+      <div class="label">Hardware transmitting real data</div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- PROBLEM -->
+<div class="section">
+  <div class="eyebrow">The Problem</div>
+  <h2>Riders spend thousands on suspension and tune it by feel.</h2>
+  <p>A serious mountain bike costs $5,000–$15,000. The fork and shock alone run $800–$2,500. Fox, RockShox, Öhlins — riders obsess over their components.</p>
+  <p>Then they go ride, something feels off, they make a guess, and try again. The suspension is moving 500 times per second over every rock and root. <strong>None of that data is being captured.</strong></p>
+  <p>Pay a suspension tuner $150 for a session? They work by experience — educated feel, not data. The gap between what riders spend and what they know about their setup is enormous.</p>
+
+  <div class="card-row">
+    <div class="card">
+      <div class="card-icon">💸</div>
+      <h4>$800–$2,500 on suspension</h4>
+      <p>Average spend on quality fork and shock components for a serious trail or enduro bike.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">🤷</div>
+      <h4>Tuned by guesswork</h4>
+      <p>No consumer tools exist to measure what the suspension is doing. Riders change settings by feel and hope.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">🏎️</div>
+      <h4>Motorsport has solved this</h4>
+      <p>F1, MotoGP, rally — every team runs suspension telemetry as standard. Mountain biking has the same physics. No tools.</p>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- MARKET GAP -->
+<div class="section" id="market">
+  <div class="eyebrow">The Competitive Landscape</div>
+  <h2>The market is empty. And we know why.</h2>
+  <p>There have been attempts. None of them solve this for regular riders.</p>
+
+  <div class="bubble" style="margin-top: 28px; align-self: stretch;">
+  <div class="comp-table-wrap">
+  <table class="comp-table">
+    <tr>
+      <th>Product</th>
+      <th>Position data</th>
+      <th>Both sensors</th>
+      <th>AI insights</th>
+      <th>Consumer</th>
+      <th>Status</th>
+    </tr>
+    <tr>
+      <td>Shockwiz</td>
+      <td><span class="dot-no">✗</span> Pressure only</td>
+      <td><span class="dot-no">✗</span></td>
+      <td><span class="dot-partial">~</span> Basic</td>
+      <td><span class="dot-yes">✓</span></td>
+      <td>Air suspension only</td>
+    </tr>
+    <tr>
+      <td>BYB Telemetry</td>
+      <td><span class="dot-yes">✓</span></td>
+      <td><span class="dot-yes">✓</span></td>
+      <td><span class="dot-no">✗</span></td>
+      <td><span class="dot-partial">~</span> $1,000+/wired</td>
+      <td>Technically available — priced out of reach for weekend riders and privateers</td>
+    </tr>
+    <tr>
+      <td>Motion Instruments (MiQ)<span class="dead-badge">Killed</span></td>
+      <td><span class="dot-yes">✓</span></td>
+      <td><span class="dot-yes">✓</span></td>
+      <td><span class="dot-partial">~</span></td>
+      <td><span class="dot-yes">✓</span></td>
+      <td>Acquired by Specialized. Shut down post-COVID.</td>
+    </tr>
+    <tr class="highlight">
+      <td>TRACE</td>
+      <td><span class="dot-yes">✓</span> 500Hz</td>
+      <td><span class="dot-yes">✓</span></td>
+      <td><span class="dot-yes">✓</span> Full AI</td>
+      <td><span class="dot-yes">✓</span></td>
+      <td>Building now</td>
+    </tr>
+  </table>
+  </div>
+
+  <p style="margin-top: 24px;"><strong>Motion Instruments proved the market.</strong> They built the closest thing to TRACE — a wireless consumer suspension sensor — and Specialized thought it was valuable enough to acquire the whole company. Then they shut the product down after COVID cuts. The market they were serving has been empty ever since. That was four years ago.</p>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- SOLUTION -->
+<div class="section" id="solution">
+  <div class="eyebrow">The Solution</div>
+  <h2>TRACE — sensor to insight in one workflow.</h2>
+  <p>TRACE is two things: a small wireless sensor that clips onto the suspension, and an iPhone app that turns the data into specific tuning recommendations.</p>
+
+  <div class="flow">
+    <div class="flow-step">
+      <div class="flow-num">1</div>
+      <div class="flow-content">
+        <h4>Clip on the sensor</h4>
+        <p>Small wireless unit mounts to fork and shock. Linear pot reads position 500 times per second. Transmits over Bluetooth. No wires, no complicated setup.</p>
+      </div>
+    </div>
+    <div class="flow-step">
+      <div class="flow-num">2</div>
+      <div class="flow-content">
+        <h4>Open the app, calibrate, ride</h4>
+        <p>Select your bike and setup. One-tap calibration with the bike off the ground. Hit record and put the phone in your pocket. App runs in the background, lock screen shows stop/pause.</p>
+      </div>
+    </div>
+    <div class="flow-step">
+      <div class="flow-num">3</div>
+      <div class="flow-content">
+        <h4>Review your data</h4>
+        <p>Fork tab and Shock tab show full position analysis — stroke counts, compression and rebound speed histograms, travel zone usage, sag measurement. Everything your suspension did on that run.</p>
+      </div>
+    </div>
+    <div class="flow-step">
+      <div class="flow-num">4</div>
+      <div class="flow-content">
+        <h4>Check the balance</h4>
+        <p>Balance tab shows fork vs rear working together. Are they moving proportionally? Is one dominating? Speed balance table breaks it down across low speed, high speed, overall.</p>
+      </div>
+    </div>
+    <div class="flow-step">
+      <div class="flow-num">5</div>
+      <div class="flow-content">
+        <h4>Get your recommendations</h4>
+        <p>Insights tab delivers specific, actionable suggestions — not "your rebound might be slow" but "add 3 clicks low speed rebound on your fork (currently 6 from closed)." Referenced to your exact setup.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- SCREENS -->
+<div class="section-wide">
+  <div class="eyebrow" style="padding: 0 0 0 0; text-align:center;">The App</div>
+  <h2 style="text-align:center; max-width: 500px; margin: 0 auto 8px;">Record. Analyze. Adapt.</h2>
+  <p style="text-align:center; margin: 0 auto 0;">The complete loop from sensor to faster riding.</p>
+
+  <div class="mockups-row">
+
+    <!-- PHONE 1: RECORD -->
+    <div class="phone-wrap">
+      <div class="phone">
+        <div class="p-screen-title">RECORD</div>
+        <div class="p-subtitle">Pre-ride · Ready to go</div>
+
+        <div class="p-row">
+          <div class="p-card">
+            <div class="p-card-head">Rider</div>
+            <div class="p-card-val">Paul S.</div>
+            <div class="p-card-sub">82kg · Enduro</div>
+          </div>
+          <div class="p-card">
+            <div class="p-card-head">Bike</div>
+            <div class="p-card-val">Slash 9</div>
+            <div class="p-card-sub">Race Day setup</div>
+          </div>
+        </div>
+
+        <div class="p-card">
+          <div class="p-card-head">Sensor Status</div>
+          <div class="p-sensor-row">
+            <div class="p-dot" style="background:#4ade80"></div>
+            <div class="p-sensor-label">Fork sensor</div>
+            <div class="p-sensor-val">94%</div>
+          </div>
+          <div style="margin: 5px 0 3px;">
+            <div class="p-bar-label"><span>Fork position</span><span>Live</span></div>
+            <div class="p-bar-track"><div class="p-bar-fill p-blue" style="width:32%"></div></div>
+          </div>
+          <div>
+            <div class="p-bar-label"><span>Shock position</span><span>Live</span></div>
+            <div class="p-bar-track"><div class="p-bar-fill p-amber" style="width:28%"></div></div>
+          </div>
+        </div>
+
+        <div class="p-card">
+          <div class="p-card-head">Calibration</div>
+          <div class="p-sensor-row">
+            <div class="p-dot" style="background:#4ade80"></div>
+            <div class="p-sensor-label">Calibrated · 2 min ago</div>
+          </div>
+        </div>
+
+        <div style="display:flex; justify-content:space-between; align-items:center; padding: 2px 0;">
+          <span class="p-badge p-badge-green">✓ AI Insights ready</span>
+        </div>
+
+        <div class="p-btn p-btn-green">START RECORDING</div>
+
+        <div class="p-tab-bar">
+          <div class="p-tab">HOME</div>
+          <div class="p-tab active">RECORD</div>
+          <div class="p-tab">ANALYZE</div>
+          <div class="p-tab">LIBRARY</div>
+        </div>
+      </div>
+      <div class="phone-label">Record</div>
+    </div>
+
+    <!-- PHONE 2: FORK ANALYZE -->
+    <div class="phone-wrap">
+      <div class="phone">
+        <div class="p-screen-title">FORK</div>
+        <div class="p-subtitle">Slash 9 · Race Day · Whistler DH</div>
+
+        <div class="p-pill-row">
+          <div class="p-pill">Position</div>
+          <div class="p-pill active">Compression</div>
+          <div class="p-pill">Rebound</div>
+          <div class="p-pill">Velocity</div>
+        </div>
+
+        <div class="p-card">
+          <div class="p-stat-row"><span class="p-stat-label">Count</span><span class="p-stat-val" style="color:#60a5fa">284 strokes</span></div>
+          <div class="p-stat-row"><span class="p-stat-label">Max speed</span><span class="p-stat-val">1,840 mm/s</span></div>
+          <div class="p-stat-row"><span class="p-stat-label">Avg speed</span><span class="p-stat-val">412 mm/s</span></div>
+          <div class="p-stat-row"><span class="p-stat-label">95th pct</span><span class="p-stat-val">1,190 mm/s</span></div>
+        </div>
+
+        <div class="p-card">
+          <div class="p-card-head">Compression Speed Distribution</div>
+          <div class="p-hist">
+            <div class="p-hist-bar p-blue" style="height:20%; opacity:.5"></div>
+            <div class="p-hist-bar p-blue" style="height:45%; opacity:.6"></div>
+            <div class="p-hist-bar p-blue" style="height:80%; opacity:.8"></div>
+            <div class="p-hist-bar p-blue" style="height:100%"></div>
+            <div class="p-hist-bar p-blue" style="height:70%; opacity:.9"></div>
+            <div class="p-hist-bar p-blue" style="height:40%; opacity:.7"></div>
+            <div class="p-hist-bar p-blue" style="height:22%; opacity:.6"></div>
+            <div class="p-hist-bar p-blue" style="height:12%; opacity:.5"></div>
+            <div class="p-hist-bar p-blue" style="height:7%; opacity:.4"></div>
+            <div class="p-hist-bar p-blue" style="height:4%; opacity:.3"></div>
+          </div>
+          <div class="p-bar-label" style="margin-top:3px"><span>Slow</span><span>Fast</span></div>
+        </div>
+
+        <div class="p-card">
+          <div class="p-card-head">Travel Usage</div>
+          <div class="p-bar-label"><span>Avg position</span><span style="color:#60a5fa">38%</span></div>
+          <div class="p-bar-track"><div class="p-bar-fill p-blue" style="width:38%"></div></div>
+          <div class="p-bar-label"><span>Max reached</span><span style="color:#60a5fa">91%</span></div>
+          <div class="p-bar-track"><div class="p-bar-fill p-blue" style="width:91%"></div></div>
+        </div>
+
+        <div class="p-tab-bar">
+          <div class="p-tab">HOME</div>
+          <div class="p-tab">RECORD</div>
+          <div class="p-tab active">ANALYZE</div>
+          <div class="p-tab">LIBRARY</div>
+        </div>
+      </div>
+      <div class="phone-label">Analyze</div>
+    </div>
+
+    <!-- PHONE 3: INSIGHTS -->
+    <div class="phone-wrap">
+      <div class="phone">
+        <div class="p-screen-title">INSIGHTS</div>
+        <div class="p-subtitle">Slash 9 · 8 qualifying runs</div>
+
+        <div class="p-progress-wrap">
+          <div class="p-progress-label">
+            <span>AI Insights threshold</span>
+            <strong>8 / 5 runs ✓</strong>
+          </div>
+          <div class="p-bar-track"><div class="p-bar-fill p-green" style="width:100%"></div></div>
+        </div>
+
+        <div class="p-insight-item">
+          <div class="p-insight-head">
+            <div class="p-insight-title">Fork rebound</div>
+            <span class="p-badge p-badge-amber">Tune</span>
+          </div>
+          <div class="p-insight-body">Add 3 clicks LSR. Rebound speed averaging 680mm/s — fork not recovering between hits at high speed.</div>
+        </div>
+
+        <div class="p-insight-item">
+          <div class="p-insight-head">
+            <div class="p-insight-title">Fork/rear balance</div>
+            <span class="p-badge p-badge-amber">Tune</span>
+          </div>
+          <div class="p-insight-body">Fork working 22% harder than rear. Consider +5psi rear shock or -2 clicks rear LSC.</div>
+        </div>
+
+        <div class="p-insight-item">
+          <div class="p-insight-head">
+            <div class="p-insight-title">Bottom-out risk</div>
+            <span class="p-badge p-badge-red">Warning</span>
+          </div>
+          <div class="p-insight-body">Fork reached 91% travel on 14 strokes. Add 1 volume spacer or +3psi before next run.</div>
+        </div>
+
+        <div class="p-insight-item">
+          <div class="p-insight-head">
+            <div class="p-insight-title">Rear sag</div>
+            <span class="p-badge p-badge-green">OK</span>
+          </div>
+          <div class="p-insight-body">Dynamic sag 30% — within target range for your weight and riding style.</div>
+        </div>
+
+        <div class="p-tab-bar">
+          <div class="p-tab">HOME</div>
+          <div class="p-tab">RECORD</div>
+          <div class="p-tab active">ANALYZE</div>
+          <div class="p-tab">LIBRARY</div>
+        </div>
+      </div>
+      <div class="phone-label">Adapt</div>
+    </div>
+
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- DIFFERENTIATORS -->
+<div class="section" id="differentiators">
+  <div class="eyebrow">Why TRACE</div>
+  <h2>Not just data. Answers.</h2>
+
+  <div class="diff-grid">
+    <div class="diff-card">
+      <div class="diff-icon">🎯</div>
+      <h4>Specific suggestions</h4>
+      <p>Not "your rebound seems slow." Exactly which adjuster, how many clicks, and why — referenced to your actual setup values.</p>
+    </div>
+    <div class="diff-card">
+      <div class="diff-icon">🚲</div>
+      <h4>Knows your bike</h4>
+      <p>Head tube angle, leverage curve, travel figures. The app understands the mechanical system and calculates real vertical wheel movement, not just raw sensor travel.</p>
+    </div>
+    <div class="diff-card">
+      <div class="diff-icon">🧠</div>
+      <h4>Learns your riding</h4>
+      <p>Recommendations improve over sessions as the AI learns how you ride and what adjustments you actually respond to.</p>
+    </div>
+    <div class="diff-card">
+      <div class="diff-icon">⚡</div>
+      <h4>Consumer hardware</h4>
+      <p>Clip on, pair, ride. No wires, no technical setup, no race-team expertise required. Designed to be on and off in 60 seconds at the trailhead.</p>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- STATUS -->
+<div class="section">
+  <div class="eyebrow">Where We Are</div>
+  <h2>POC hardware and early testing complete.</h2>
+  <p>The sensor is transmitting real data. Firmware is running. The full packet pipeline is verified end-to-end on an iPhone. POC is proven — what's left is the app and production-ready hardware.</p>
+
+  <table class="status-table">
+    <tr>
+      <td>Hardware POC (sensor + BLE transmission)</td>
+      <td class="status-done">✓ Complete</td>
+    </tr>
+    <tr>
+      <td>Firmware — 500Hz ADC, 100Hz BLE, battery reading</td>
+      <td class="status-done">✓ Complete</td>
+    </tr>
+    <tr>
+      <td>BLE packet format verified on iPhone via nRF Connect</td>
+      <td class="status-done">✓ Complete</td>
+    </tr>
+    <tr>
+      <td>Mac for iOS/Xcode development</td>
+      <td class="status-pending">⟶ Needs funding</td>
+    </tr>
+    <tr>
+      <td>iOS app — Phase 1 (core recording loop)</td>
+      <td class="status-pending">⟶ Pending</td>
+    </tr>
+    <tr>
+      <td>iOS app — Phase 2 (full analysis + AI recommendations)</td>
+      <td class="status-pending">⟶ Pending</td>
+    </tr>
+    <tr>
+      <td>Production hardware (custom PCB, enclosure)</td>
+      <td class="status-pending">⟶ Future</td>
+    </tr>
+  </table>
+</div>
+
+<div class="divider"></div>
+
+<!-- ASK -->
+<div class="section">
+  <div class="eyebrow">The Ask</div>
+  <h2>What's needed to finish this.</h2>
+  <p>POC hardware and early testing are complete. This is what's needed to go from proven prototype to finished app and production-ready sensors.</p>
+
+  <div class="ask-box">
+    <h3>Total needed</h3>
+    <div class="ask-amount">$1,300–$1,600</div>
+    <div class="ask-use">
+      <div class="ask-line"><span>Mac Mini — used or new, M1 chip or better</span><strong>$500–$800</strong></div>
+      <div class="ask-line"><span>Production sensor hardware — linear pots, connectors, enclosures</span><strong>$600</strong></div>
+      <div class="ask-line"><span>Dev components, tools, miscellaneous</span><strong>$200</strong></div>
+    </div>
+  </div>
+
+  <p style="margin-top: 28px;">Motion Instruments proved there's a market. Specialized proved it was worth acquiring. COVID proved corporate priorities can kill good products. The gap they left has not been filled in four years. <strong>The hardware works. The data is real. What's left is building the app.</strong></p>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  <p>TRACE — built by Paul Scudamore</p>
+  <p><a href="mailto:scudamore.paul@gmail.com">scudamore.paul@gmail.com</a></p>
+  <p style="margin-top: 16px;">Prototype hardware working · iOS app in development · Pre-seed open</p>
+</div>
+
+<script>
+// ── TIMING CONFIG — tweak these numbers, save, refresh locally to preview ──
+var T = {
+  // Photo 1 — intro forest
+  introGoneBy:      0.55,  // fraction of intro height when forest is fully gone (lower = sooner)
+
+  // Photo 2 — trail rider (hero section)
+  heroLeadIn:       1.0,   // viewports before hero top where trail rider starts fading in (higher = sooner)
+  heroLeadInWindow: 0.5,   // viewports over which trail rider fades in (lower = faster fade)
+  heroMaxOpacity:   0.45,
+
+  // Photo 3 — jump shot (market/solution sections)
+  marketLeadIn:     1.5,   // viewports before market where jump shot starts (higher = sooner)
+  marketMaxOpacity: 0.38,
+
+  // Photo 4 — dark forest descent (differentiators → ask)
+  diffLeadIn:       1.5,   // viewports before differentiators where it starts (higher = sooner)
+  diffMaxOpacity:   0.42,
+  diffFadeOutStart: 1.2,   // viewports from page bottom where it starts fading out
+};
+// ─────────────────────────────────────────────────────────────────────────────
+
+(function () {
+  var prlxIntro = document.getElementById('prlx-intro');
+  var prlx1 = document.getElementById('prlx1');
+  var prlx2 = document.getElementById('prlx2');
+  var prlx3 = document.getElementById('prlx3');
+  var hero = document.getElementById('hero');
+  var market = document.getElementById('market');
+  var solution = document.getElementById('solution');
+  var differentiators = document.getElementById('differentiators');
+
+  function clamp(v, lo, hi) { return v < lo ? lo : v > hi ? hi : v; }
+
+  function onScroll() {
+    var sy = window.scrollY;
+    var vh = window.innerHeight;
+
+    var heroTop = hero.offsetTop;
+    var heroH = hero.offsetHeight;
+    var heroRel = sy - heroTop;
+
+    // Photo 1 — intro forest
+    var introFade = clamp(1 - sy / (heroTop * T.introGoneBy), 0, 1);
+    prlxIntro.style.opacity = (introFade * 0.48).toFixed(3);
+    prlxIntro.style.transform = 'translateY(' + (sy * 0.28).toFixed(1) + 'px)';
+
+    // Photo 2 — trail rider
+    var heroFadeIn  = clamp((sy - (heroTop - vh * T.heroLeadIn)) / (vh * T.heroLeadInWindow), 0, 1);
+    var heroFadeOut = clamp(1 - (heroRel / (heroH * 0.8)), 0, 1);
+    prlx1.style.opacity = (heroFadeIn * heroFadeOut * T.heroMaxOpacity).toFixed(3);
+    prlx1.style.transform = 'translateY(' + (heroRel * 0.3).toFixed(1) + 'px)';
+
+    // Photo 3 — jump shot
+    var marketTop = market.offsetTop;
+    var solutionBottom = solution.offsetTop + solution.offsetHeight;
+    var fadeIn2  = clamp((sy + vh * T.marketLeadIn - marketTop) / vh, 0, 1);
+    var fadeOut2 = clamp((sy - (solutionBottom - vh * 0.6)) / (vh * 0.6), 0, 1);
+    prlx2.style.opacity = (fadeIn2 * (1 - fadeOut2) * T.marketMaxOpacity).toFixed(3);
+    prlx2.style.transform = 'translateY(' + ((sy - marketTop) * 0.28).toFixed(1) + 'px)';
+
+    // Photo 4 — dark forest descent
+    var diffTop = differentiators.offsetTop;
+    var pageBottom = document.body.scrollHeight;
+    var fadeIn3  = clamp((sy + vh * T.diffLeadIn - diffTop) / vh, 0, 1);
+    var fadeOut3 = clamp((sy - (pageBottom - vh * T.diffFadeOutStart)) / (vh * 0.6), 0, 1);
+    prlx3.style.opacity = (fadeIn3 * (1 - fadeOut3) * T.diffMaxOpacity).toFixed(3);
+    prlx3.style.transform = 'translateY(' + ((sy - diffTop) * 0.28).toFixed(1) + 'px)';
+  }
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+})();
+</script>
+
+</body>
+</html>

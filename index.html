@@ -412,7 +412,17 @@ p strong { color: rgba(255,255,255,0.85); font-weight: 600; }
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
 }
+#intro::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 55% 45% at 50% 50%, rgba(0,0,0,0.88) 0%, rgba(0,0,0,0.55) 40%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+.intro-logo { position: relative; z-index: 1; }
 #prlx-intro {
   background-image: url('intro_bg.png');
   opacity: 0.5;
